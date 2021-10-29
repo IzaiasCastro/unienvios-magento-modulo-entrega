@@ -1,5 +1,5 @@
 <?php
-namespace Dev\Testing\Plugin\Checkout\Block\Checkout;
+namespace Unienvios\Cotacao\Plugin\Checkout\Block\Checkout;
   
 class LayoutProcessor
 {

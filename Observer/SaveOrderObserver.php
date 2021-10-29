@@ -1,5 +1,5 @@
 <?php
-namespace Dev\Testing\Observer;
+namespace Unienvios\Cotacao\Observer;
 
 use Magento\Framework\Event\Observer as EventObserver;
 use Magento\Framework\Event\ObserverInterface;

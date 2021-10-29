@@ -1,5 +1,5 @@
 <?php
-namespace Dev\Testing\Setup;
+namespace Unienvios\Cotacao\Setup;
 
 use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;

@@ -1,5 +1,5 @@
 <?php
-namespace Dev\Testing\Block\Adminhtml\OrderEdit\Tab;
+namespace Unienvios\Cotacao\Block\Adminhtml\OrderEdit\Tab;
  
 /**
  * Order custom tab
@@ -59,7 +59,7 @@ class View extends \Magento\Backend\Block\Template implements \Magento\Backend\B
      */
     public function getTabLabel()
     {
-        return __('My Custom Tab');
+        return __('Unienvios Informações');
     }
  
     /**
@@ -67,7 +67,7 @@ class View extends \Magento\Backend\Block\Template implements \Magento\Backend\B
      */
     public function getTabTitle()
     {
-        return __('My Custom Tab');
+        return __('Unienvios Informações');
     }
  
     /**
@@ -87,7 +87,19 @@ class View extends \Magento\Backend\Block\Template implements \Magento\Backend\B
     }
 	
 public function getToken(){
-return json_encode( $this->getOrder()->getData("custom_notes") );
+return json_encode( $this->getOrder()->getData("unienvios_token") );
+}
+public function getCpf(){
+	return json_encode( $this->getOrder()->getData("unienvios_document_recipient") ); 
+}
+public function getNumber(){
+	return json_encode( $this->getOrder()->getData("unienvios_number") ); 
+}
+public function getNeighbourhood(){
+	return json_encode( $this->getOrder()->getData("unienvios_neighbourhood") ); 
+}
+public function getComplement(){
+	return json_encode( $this->getOrder()->getData("unienvios_complement") );
 }
 
 }

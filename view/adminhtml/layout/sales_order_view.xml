@@ -6,7 +6,7 @@
         <referenceBlock name="sales_order_tabs">
             <action method="addTab">
                 <argument name="name" xsi:type="string">custom_tabs</argument>
-                <argument name="block" xsi:type="string">Dev\Testing\Block\Adminhtml\OrderEdit\Tab\View</argument>
+                <argument name="block" xsi:type="string">Unienvios\Cotacao\Block\Adminhtml\OrderEdit\Tab\View</argument>
             </action>
         </referenceBlock>
     </body>

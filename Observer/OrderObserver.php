@@ -1,6 +1,6 @@
 <?php
 
-namespace Dev\Testing\Observer;
+namespace Unienvios\Cotacao\Observer;
 
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
@@ -15,13 +15,13 @@ class OrderObserver implements ObserverInterface
     protected $_objectManager;
     protected $messageManager;
     protected $_curl;
-     protected $_quoteRepository;
-protected $_productRepository;
-protected $scopeConfig;
+    protected $_quoteRepository;
+    protected $_productRepository;
+    protected $scopeConfig;
 
-const XML_PATH_EMAIL_RECIPIENT = 'carriers/unienvios/email';
-const XML_PATH_SENHA_RECIPIENT = 'carriers/unienvios/senha';
-const XML_PATH_STATUS_RECIPIENT = 'carriers/unienvios/active';
+   const XML_PATH_EMAIL_RECIPIENT = 'carriers/unienvios/email';
+   const XML_PATH_SENHA_RECIPIENT = 'carriers/unienvios/senha';
+   const XML_PATH_STATUS_RECIPIENT = 'carriers/unienvios/active';
     /**
      * @param \Magento\Framework\ObjectManagerInterface $objectManager
      */
@@ -47,33 +47,18 @@ const XML_PATH_STATUS_RECIPIENT = 'carriers/unienvios/active';
      public function execute(Observer $observer)
     {
 	
+	/** @var OrderInterface $order */
+        $order = $observer->getEvent()->getOrder();
+        $orderId = $order->getEntityId();
+
+         if($order->getState() == 'processing') {
+    		$this->enviarCotacao();
+         }
+	$this->enviarCotacao($order);
+		
     }
 
     public function apiCreateQuotation($parametros, $token) {
-    /**	$parametros = array(
-      'zipcode_destiny' => "64224002",
-      'document_recipient' => "073-910.063-78",
-      'name_recipient' => "John Doe",
-      'email_recipient' => "johndoe@email.com",
-      'phone_recipient' => "(11)-98161755",
-      'estimate_height' => 12,
-      'estimate_width' => 15,
-      'estimate_length' => 15,
-      'estimate_weight' => 15,
-      'order_value' => 150,
-      'address' => "Rua José Diog",
-      'number' => "361",
-      'city' => "Parnaiba",
-      'neighbourhood' => "bairro cal",
-      'state' => "PI",
-      'complement' => "casa",
-      'shipping_id' => "36106104-9fd7-4e60-b1fa-275188d227c5"
-    );
-**/
-
-///aqui
-$values = $this->getReceipentSenha();
-return $values;
 
  $parans = json_encode($parametros);
         $this->_curl->addHeader("Content-Type", "application/json");
@@ -112,5 +97,79 @@ return $values;
 
      }
 
+	public function enviarCotacao($order) {
+		
+
+	
+        if($this->getReceipentStatus() == "1"){
+
+        $shipping_id = str_replace("unienvios_", "", $order->getData('shipping_method'));
+        $token = $order->getData("unienvios_token");
+
+
+        $medidas = [
+         "estimate_height" => 0,
+         "estimate_width" => 0,
+         "estimate_length" => 0,
+         "estimate_weight" => 0
+        ];
+
+        foreach ($order->getAllItems() as $item) {
+            $product = $this->productFactory->create()->load($item->getProductId());
+            $width = $product->getResource()->getAttribute('ts_dimensions_width')->getFrontend()->getValue($product);
+            $height = $product->getResource()->getAttribute('ts_dimensions_height')->getFrontend()->getValue($product);
+            $length = $product->getResource()->getAttribute('ts_dimensions_length')->getFrontend()->getValue($product);
+            $weight = $product->getResource()->getAttribute('ts_dimensions_weight')->getFrontend()->getValue($product);
+         if ($width) {
+                $medidas['estimate_width'] += doubleval($width) * intVal($item->getQtyOrdered());
+            }
+
+         if ($height) {
+                $medidas['estimate_height'] += doubleval($height) * intVal($item->getQtyOrdered());
+            }
+         if ($length) {
+                 $medidas['estimate_length'] += doubleval($length) * intVal($item->getQtyOrdered());
+            }
+
+         if ($weight) {
+                 $medidas['estimate_weight'] += doubleval($weight) * intVal($item->getQtyOrdered());
+          }
+
+
+         }
+
+
+        $parametros = [
+        "zipcode_destiny" => $order->getShippingAddress()->getData("postcode"),
+        "document_recipient" => $order->getData("unienvios_document_recipient"),
+        "name_recipient" =>$order->getShippingAddress()->getData("firstname"),
+        "email_recipient" => $order->getShippingAddress()->getData("email"),
+        "phone_recipient"=> $order->getShippingAddress()->getData("telephone"),
+        "estimate_height" => $medidas['estimate_height'],
+        "estimate_width" =>  $medidas['estimate_width'],
+        "estimate_length" => $medidas['estimate_length'],
+        "estimate_weight" => $medidas['estimate_weight'],
+        "order_value" => doubleval($order->getSubtotal()),
+        "address" =>$order->getShippingAddress()->getData("street"),
+        "number" => $order->getData("unienvios_number"),
+        "city" => $order->getShippingAddress()->getData("city"),
+        "neighbourhood" => $order->getData("unienvios_neighbourhood"),
+        "state" => $order->getShippingAddress()->getData("region"),
+        "complement" => $order->getData("unienvios_complement"),
+        "shipping_id" => $shipping_id
+        ];
+
+
+        $response = $this->apiCreateQuotation($parametros, $token);
+	
+		if($response != '{"message":"Cotação enviada com sucesso"}'){
+
+        		echo "<pre>"; var_dump($response);exit;
+	
+		}
+        }
+	
+	
+	}
 
 }
