@@ -119,7 +119,10 @@ class InstallSchema implements InstallSchemaInterface
                                 'nullable' => true,
                                 'comment' =>'Complemento'
                         ]
-                );			
+               );		
+		
+		    
+		
         $setup->endSetup();
     }
 }
