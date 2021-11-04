@@ -6,7 +6,7 @@
                 <active>0</active>
                 <email></email>
                 <senha></senha>
-                <model>Dev\Testing\Model\Carrier\UnienviosModel</model>
+                <model>Unienvios\Cotacao\Model\Carrier\UnienviosModel</model>
             </unienvios>
         </carriers>
     </default>

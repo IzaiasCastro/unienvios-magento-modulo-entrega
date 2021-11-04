@@ -3,10 +3,10 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
     <event name="sales_model_service_quote_submit_before">
-        <observer name="extra_shipping_cost" instance="Dev\Testing\Observer\SaveOrderObserver" />
+        <observer name="extra_shipping_cost" instance="Unienvios\Cotacao\Observer\SaveOrderObserver" />
     </event>
 
      <event name="sales_order_save_after">
-        <observer name="magento_orderevent_create" instance="Dev\Testing\Observer\OrderObserver" />
+        <observer name="magento_orderevent_create" instance="Unienvios\Cotacao\Observer\OrderObserver" />
      </event>
 </config>

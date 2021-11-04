@@ -1,10 +1,11 @@
-<?php echo "oioi" ?>
-
 <script type="text/javascript">
-//require(['jquery','jqueryMask'],function($){
-//    $(window).load(function() {
-//        alert('deu certo')
-///    });
-//});
-</script>
+require(['jquery','jqueryMask'],function($){
+    $(document).ready(function() {
+        var $seuCampoCpf = $('input[name="custom_attributes[unienvios_document_recipient]"]');
+        $seuCampoCpf.mask('000.000.000-00', {reverse: true});
 
+        var $seuCampoCpf = $('input[name="postcode"]');
+        $seuCampoCpf.mask('00000-000', {reverse: true});
+    });
+});
+</script>

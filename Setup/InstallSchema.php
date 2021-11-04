@@ -1,5 +1,5 @@
 <?php
-namespace Dev\Testing\Setup;
+namespace Unienvios\Cotacao\Setup;
 
 use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
@@ -119,7 +119,10 @@ class InstallSchema implements InstallSchemaInterface
                                 'nullable' => true,
                                 'comment' =>'Complemento'
                         ]
-                );			
+               );		
+		
+		    
+		
         $setup->endSetup();
     }
 }

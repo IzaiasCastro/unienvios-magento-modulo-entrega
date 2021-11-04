@@ -1,6 +1,6 @@
 <?php
 
-namespace Dev\Testing\Model\Carrier;
+namespace Unienvios\Cotacao\Model\Carrier;
 
 use Magento\Quote\Model\Quote\Address\RateRequest;
 use Magento\Shipping\Model\Carrier\AbstractCarrier;

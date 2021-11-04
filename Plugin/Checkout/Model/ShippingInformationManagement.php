@@ -1,5 +1,5 @@
 <?php
-namespace Dev\Testing\Plugin\Checkout\Model;
+namespace Unienvios\Cotacao\Plugin\Checkout\Model;
 
 
 class ShippingInformationManagement
