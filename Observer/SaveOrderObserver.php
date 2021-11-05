@@ -11,6 +11,9 @@ class SaveOrderObserver implements ObserverInterface
         $order = $observer->getEvent()->getOrder();
         $quote = $observer->getEvent()->getQuote();
 	
+//echo "<pre>"; var_dump("okok");exit;	
+
+	
 	$om = \Magento\Framework\App\ObjectManager::getInstance();
  	$session = $om->get('Magento\Checkout\Model\Session');
   	$token = $session->getMyTokenQuotation() ;	

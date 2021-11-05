@@ -46,6 +46,8 @@ class OrderObserver implements ObserverInterface
 
      public function execute(Observer $observer)
     {
+
+echo "<pre>"; var_dump("okok");exit;
 	
 	/** @var OrderInterface $order */
         $order = $observer->getEvent()->getOrder();
