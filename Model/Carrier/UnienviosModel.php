@@ -95,7 +95,7 @@ const XML_PATH_STATUS_RECIPIENT = 'carriers/unienvios/active';
         $method->setCarrierTitle("Unienvios");
 
 	$medidas = [
- 	 "zipcode_destiny" => $request->getData()['dest_postcode'],
+ 	 "zipcode_destiny" =>str_replace("-", "",  $request->getData()['dest_postcode'] ),
  	 "estimate_height" => 0,
  	 "estimate_width" => 0,
  	 "estimate_length" => 0,
@@ -109,10 +109,10 @@ foreach($request->getAllItems() as $item){
  
    $objectManagerTeste = \Magento\Framework\App\ObjectManager::getInstance();
    $product = $objectManagerTeste->create('Magento\Catalog\Model\Product')->load($product->getId());
-   $my_width = $product->getData('ts_dimensions_width');
-   $my_height = $product->getData('ts_dimensions_height');
-   $my_length = $product->getData('ts_dimensions_length');
-   $my_weight = $product->getData('ts_dimensions_weight');    
+   $my_width = $product->getData('unienvios_width');
+   $my_height = $product->getData('unienvios_height');
+   $my_length = $product->getData('unienvios_length');
+   $my_weight = $product->getData('unienvios_weight');    
    $medidas['estimate_width'] += doubleval($my_width) * intVal($item->get('qty')['qty']);
    $medidas['estimate_height'] += doubleval($my_height) * intVal($item->get('qty')['qty']);
    $medidas['estimate_length'] += doubleval($my_length) * intVal($item->get('qty')['qty']);
@@ -126,10 +126,10 @@ foreach($request->getAllItems() as $item){
 	if(isset($quotations->statusCode)){
 	return false;	
 	
-	$dado = ["code"=>"teset1", "title"=>json_encode($quotations->statusCode), "price"=>11.8, "cost"=>0];
-         $result->append($this->_getExpressShippingRate($dado));
+//	$dado = ["code"=>"teset1", "title"=>json_encode($quotations->statusCode), "price"=>11.8, "cost"=>0];
+//         $result->append($this->_getExpressShippingRate($dado));
 
-	$this->getAllowedMethods();	
+//	$this->getAllowedMethods();	
 	return $result;
 
 	}else{
