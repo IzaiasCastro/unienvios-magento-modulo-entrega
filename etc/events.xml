@@ -6,7 +6,4 @@
         <observer name="extra_shipping_cost" instance="Unienvios\Cotacao\Observer\SaveOrderObserver" />
     </event>
 
-     <event name="sales_order_save_after">
-        <observer name="magento_orderevent_create" instance="Unienvios\Cotacao\Observer\OrderObserver" />
-     </event>
 </config>

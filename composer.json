@@ -1,0 +1,13 @@
+{
+    "name": "unienvios/cotacao-parte-1",
+    "description": "Essa é uma parte integrante do módulo Cotação da Unienvios, sendo responsável pela seleção do método de entrega",
+    "type": "magento2-module",
+    "version": "1.0.0", 
+   "authors": [
+        {
+            "name": "Unienvios",
+            "homepage": "https://unienvios.com.br",
+        }
+    ],
+    "license": "GPL-2.0-or-later"
+}
